@@ -1,5 +1,5 @@
 /**
- * GẮP GÌ ĂN NẤY - Ứng dụng gợi ý món ăn ngẫu nhiên theo ngân sách
+ * MealMate - Ứng dụng gợi ý món ăn ngẫu nhiên theo ngân sách
  * File: js/app.js - Điều phối logic giao diện, hiệu ứng máy gắp và tương tác
  */
 

@@ -1,9 +1,9 @@
-# Gắp Gì Ăn Nấy (Claw Machine Food Picker)
+# MealMate (Claw Machine Food Picker)
 
 Ứng dụng web gợi ý món ăn ngẫu nhiên theo ngân sách, phong cách máy gắp thú bông arcade màu pastel hài hước, phục vụ bài tập môn học (phi thương mại).
 
 ## 1. Giới thiệu
-"Trưa nay ăn gì?" luôn là câu hỏi nan giải mỗi ngày. Web app "Gắp Gì Ăn Nấy" biến việc chọn món ăn thành một trò chơi gắp thú bông vui nhộn:
+"Trưa nay ăn gì?" luôn là câu hỏi nan giải mỗi ngày. Web app "MealMate" biến việc chọn món ăn thành một trò chơi gắp thú bông vui nhộn:
 - Chọn nhóm: Ăn trưa, Đồ uống, Ăn vặt, Món nhậu.
 - Chọn ngân sách linh hoạt: Các mốc nhanh 20k, 30k, 50k, 80k, 120k, 200k+ hoặc kéo thanh trượt.
 - Tùy chọn lọc: Chỉ món chay.
@@ -19,7 +19,7 @@
 
 ## 3. Cấu trúc thư mục
 ```
-gap-gi-an-nay/
+mealmate/
 ├── index.html        # Trang giao diện chính
 ├── css/
 │   └── style.css     # Định dạng phong cách pastel và hiệu ứng máy gắp

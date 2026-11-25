@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gắp Gì Ăn Nấy - Máy Gắp Thú Bông Ăn Trưa Hài Hước</title>
+  <title>MealMate - Máy Gắp Thú Bông Ăn Trưa Hài Hước</title>
   <meta name="description" content="Web app gợi ý món ăn ngẫu nhiên theo ngân sách dạng máy gắp thú bông pastel hài hước, giải cứu mọi cơn đau đầu vì câu hỏi 'Trưa nay ăn gì?'.">
 
   <!-- Google Fonts: Baloo 2 cho tiêu đề & Nunito cho nội dung -->
@@ -17,24 +17,24 @@
 <body>
   <!-- Header chính -->
   <header class="app-header" role="banner">
-    <div class="header-container">
-      <div class="logo-group">
-        <span class="logo-icon" aria-hidden="true">🕹️</span>
-        <div class="logo-text">
-          <h1 class="app-title">Gắp Gì Ăn Nấy</h1>
-          <p class="app-tagline">Máy gắp thú bông ẩm thực • Chữa dứt điểm bệnh "Ăn gì cũng được"</p>
-        </div>
+      <div class="header-container">
+          <div class="logo-group">
+              <span class="logo-icon" aria-hidden="true">🕹️</span>
+              <div class="logo-text">
+                  <h1 class="app-title">MealMate</h1>
+                  <p class="app-tagline">Máy gắp thú bông ẩm thực • Chữa dứt điểm bệnh "Ăn gì cũng được"</p>
+              </div>
+          </div>
+          <!-- Tab điều hướng máy gắp / kho món -->MealMate
+          <nav class="nav-tabs" aria-label="Điều hướng trang">
+              <button id="nav-machine" class="nav-btn active" aria-selected="true" role="tab">
+                  <span class="icon" aria-hidden="true">🎰</span> Máy Gắp
+              </button>
+              <button id="nav-catalog" class="nav-btn" aria-selected="false" role="tab">
+                  <span class="icon" aria-hidden="true">📖</span> Kho Món (<span id="total-dishes-badge">0</span>)
+              </button>
+          </nav>
       </div>
-      <!-- Tab điều hướng máy gắp / kho món -->
-      <nav class="nav-tabs" aria-label="Điều hướng trang">
-        <button id="nav-machine" class="nav-btn active" aria-selected="true" role="tab">
-          <span class="icon" aria-hidden="true">🎰</span> Máy Gắp
-        </button>
-        <button id="nav-catalog" class="nav-btn" aria-selected="false" role="tab">
-          <span class="icon" aria-hidden="true">📖</span> Kho Món (<span id="total-dishes-badge">0</span>)
-        </button>
-      </nav>
-    </div>
   </header>
 
   <!-- Main Content -->
@@ -259,7 +259,7 @@
         <div class="catalog-title-group">
           <h2 id="catalog-heading" class="section-title">
             <span class="icon" aria-hidden="true">📖</span>
-            Kho Món Ăn "Gắp Gì Ăn Nấy"
+            Kho Món Ăn "MealMate"
           </h2>
           <p class="section-desc">Toàn bộ kho tàng ẩm thực phong phú với giá cả chuẩn sinh viên - văn phòng.</p>
         </div>
@@ -353,7 +353,7 @@
   <footer class="app-footer" role="contentinfo">
     <div class="footer-container">
       <p class="footer-credits">
-        🎮 <strong>Gắp Gì Ăn Nấy</strong> • Bài tập môn học phi thương mại • Được làm với tình yêu ẩm thực & tiếng cười.
+        🎮 <strong>MealMate</strong> • Bài tập môn học phi thương mại • Được làm với tình yêu ẩm thực & tiếng cười.
       </p>
       <p class="footer-reference">
         💡 Ý tưởng tham khảo từ <em>truanayangi.com</em>. Giao diện, mã nguồn và dữ liệu do tác giả tự thực hiện độc lập.

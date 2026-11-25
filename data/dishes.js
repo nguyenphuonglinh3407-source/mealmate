@@ -1,5 +1,5 @@
 /**
- * Danh sách món ăn cho web app "Gắp Gì Ăn Nấy"
+ * Danh sách món ăn cho web app "MealMate"
  * Phân loại:
  * - 'lunch': Ăn trưa
  * - 'drink': Đồ uống

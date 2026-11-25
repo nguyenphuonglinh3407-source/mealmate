@@ -1,0 +1,839 @@
+/* ==========================================================================
+   TỦ LẠNH THẦN KỲ - STYLESHEET
+   Tính năng AI gợi ý món ăn theo nguyên liệu trong tủ lạnh
+   Phong cách Pastel mềm mại, hài hước, đồng bộ với MealMate
+   ========================================================================== */
+
+/* Khung chính của view Tủ Lạnh */
+#fridge-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Header của Tủ Lạnh */
+.fridge-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.fridge-title-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.fridge-title-icon {
+  font-size: 2.4rem;
+  filter: drop-shadow(2px 3px 0 var(--mint-green));
+  animation: fridge-bob 3s infinite ease-in-out alternate;
+}
+
+@keyframes fridge-bob {
+  0% { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-5px) rotate(3deg); }
+}
+
+.fridge-title {
+  font-family: var(--font-heading);
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: var(--cacao-brown);
+  line-height: 1.1;
+  text-shadow: 2px 2px 0 var(--butter-yellow);
+}
+
+.fridge-subtitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cacao-light);
+  line-height: 1.5;
+}
+
+/* Lưu ý bảo mật / quyền riêng tư Google Gemini */
+.fridge-disclaimer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--white-soft);
+  border: 2px dashed var(--lavender-dark);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 1.1rem;
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--lavender-dark);
+  box-shadow: var(--shadow-block-sm);
+}
+
+.disclaimer-icon {
+  font-size: 1.1rem;
+}
+
+/* Layout 2 cột: Cột nhập ảnh & Cột nguyên liệu / món ăn */
+.fridge-grid-container {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+/* Thẻ panel phong cách pastel */
+.fridge-card {
+  background-color: var(--card-bg);
+  border: var(--border-thick);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-block);
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.fridge-step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--butter-yellow);
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.85rem;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+  width: fit-content;
+}
+
+.fridge-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Khu vực kéo thả / chọn ảnh (Dropzone) */
+.dropzone-wrapper {
+  position: relative;
+  border: 3px dashed var(--cacao-light);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-cream);
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.dropzone-wrapper:hover,
+.dropzone-wrapper.dragover {
+  border-color: var(--candy-pink-deep);
+  background-color: #fff1f4;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-block-sm);
+}
+
+.dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.dropzone-illustration {
+  font-size: 3rem;
+  animation: dropzone-pulse 2s infinite ease-in-out;
+}
+
+@keyframes dropzone-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.dropzone-instruction {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+}
+
+.dropzone-subtext {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cacao-light);
+}
+
+.btn-upload-trigger {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 800;
+  background-color: var(--candy-pink);
+  color: var(--cacao-brown);
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+  transition: transform 0.15s ease;
+  margin-top: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-upload-trigger:hover {
+  transform: translateY(-2px);
+  background-color: var(--candy-pink-deep);
+}
+
+/* Xem trước ảnh (Preview) */
+.image-preview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.preview-frame {
+  width: 100%;
+  max-height: 280px;
+  border-radius: var(--radius-md);
+  border: var(--border-medium);
+  overflow: hidden;
+  background-color: #faede0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-block-sm);
+  position: relative;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.preview-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cacao-light);
+  padding: 0 0.25rem;
+}
+
+.btn-change-image {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+  background-color: var(--white-soft);
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+  transition: all 0.2s ease;
+}
+
+.btn-change-image:hover {
+  background-color: #ffdcd7;
+  transform: translateY(-1px);
+}
+
+/* Nút hành động chính (Soi tủ lạnh / Gợi ý món) */
+.btn-fridge-action {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--cacao-brown);
+  background-color: var(--mint-green);
+  border: var(--border-thick);
+  border-radius: var(--radius-full);
+  padding: 0.85rem 1.6rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-block);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.btn-fridge-action:hover:not(:disabled) {
+  background-color: #a0e6cb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 var(--cacao-brown);
+}
+
+.btn-fridge-action:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: var(--shadow-block-pressed);
+}
+
+.btn-fridge-action:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-block-sm);
+}
+
+.btn-fridge-suggest {
+  background-color: var(--butter-yellow);
+}
+
+.btn-fridge-suggest:hover:not(:disabled) {
+  background-color: #ffd980;
+}
+
+/* Khu vực hiển thị Chips nguyên liệu */
+.ingredients-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.ingredients-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  min-height: 52px;
+  padding: 0.65rem;
+  background-color: var(--bg-cream);
+  border: 2px dashed var(--cacao-light);
+  border-radius: var(--radius-md);
+  align-items: center;
+}
+
+.ingredient-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: var(--white-soft);
+  border: 2px solid var(--cacao-brown);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.75rem 0.35rem 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+  box-shadow: var(--shadow-block-sm);
+  transition: all 0.2s ease;
+  animation: chip-appear 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes chip-appear {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.chip-remove-btn {
+  background: transparent;
+  border: none;
+  color: #c9511d;
+  font-size: 0.95rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+  margin-left: 2px;
+}
+
+.chip-remove-btn:hover {
+  background-color: #ffdcd7;
+  transform: scale(1.2);
+}
+
+.empty-chips-hint {
+  font-size: 0.85rem;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--cacao-light);
+  text-align: center;
+  width: 100%;
+}
+
+/* Form thêm nguyên liệu thủ công */
+.add-ingredient-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-ingredient-manual {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.55rem 1rem;
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  background-color: var(--bg-cream);
+  color: var(--cacao-brown);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input-ingredient-manual:focus {
+  border-color: var(--candy-pink-deep);
+  background-color: var(--white-soft);
+}
+
+.btn-add-ingredient {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 800;
+  background-color: var(--mint-green);
+  color: var(--cacao-brown);
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-add-ingredient:hover {
+  background-color: #a0e6cb;
+  transform: translateY(-1px);
+}
+
+/* Các tùy chọn cho Bước 2: Số người ăn & Chay/Mặn */
+.fridge-options-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background-color: var(--bg-cream);
+  border: 2px solid var(--cacao-brown);
+  border-radius: var(--radius-md);
+  align-items: center;
+}
+
+.servings-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.servings-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.servings-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: var(--white-soft);
+  border: 2px solid var(--cacao-brown);
+  border-radius: var(--radius-full);
+  padding: 2px 6px;
+}
+
+.btn-step {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--butter-yellow);
+  color: var(--cacao-brown);
+  font-weight: 900;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.btn-step:hover {
+  transform: scale(1.15);
+}
+
+.servings-value {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  min-width: 20px;
+  text-align: center;
+  color: var(--cacao-brown);
+}
+
+/* Hộp trạng thái chờ (Loading Box) với các câu thoại vui nhộn xoay vòng */
+.fridge-loading-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem 1.5rem;
+  background-color: #fffaf4;
+  border: 3px dashed var(--lavender-purple);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-block-sm);
+  animation: loading-pulse 2s infinite ease-in-out;
+}
+
+@keyframes loading-pulse {
+  0%, 100% { border-color: var(--candy-pink); }
+  50% { border-color: var(--mint-green); }
+}
+
+.loading-spinner-mascot {
+  font-size: 3rem;
+  animation: mascot-spin 1.8s infinite ease-in-out;
+}
+
+@keyframes mascot-spin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.loading-funny-text {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--lavender-dark);
+  min-height: 1.6em;
+  transition: opacity 0.3s ease;
+}
+
+.loading-subhint {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cacao-light);
+}
+
+/* Hộp thông báo lỗi hài hước kèm nút thử lại */
+.fridge-error-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1.5rem;
+  background-color: #fff0ee;
+  border: 3px solid #e75a45;
+  border-radius: var(--radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-block-sm);
+}
+
+.error-mascot {
+  font-size: 2.2rem;
+}
+
+.error-message {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  color: #a82d1c;
+  line-height: 1.4;
+}
+
+.btn-retry {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 800;
+  background-color: var(--white-soft);
+  border: 2px solid var(--cacao-brown);
+  border-radius: var(--radius-full);
+  padding: 0.4rem 1rem;
+  color: var(--cacao-brown);
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+  transition: transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-retry:hover {
+  background-color: #ffdcd7;
+  transform: translateY(-2px);
+}
+
+/* DANH SÁCH MÓN ĂN GỢI Ý (RECIPE CARDS) */
+.suggested-recipes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.recipes-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipes-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.recipes-count-pill {
+  background-color: var(--candy-pink);
+  border: 1.5px solid var(--cacao-brown);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.recipe-card {
+  background-color: var(--white-soft);
+  border: var(--border-thick);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-block);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.recipe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 0 var(--cacao-brown);
+}
+
+.recipe-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.recipe-avatar-box {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2.5px solid var(--cacao-brown);
+  background-color: var(--butter-yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  box-shadow: var(--shadow-block-sm);
+  flex-shrink: 0;
+}
+
+.recipe-badge-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.recipe-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--cacao-brown);
+  line-height: 1.2;
+}
+
+/* Badges thông tin món ăn */
+.recipe-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.badge-meta {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--cacao-brown);
+}
+
+.badge-time {
+  background-color: var(--mint-green);
+  color: var(--mint-green-dark);
+}
+
+.badge-diff-easy {
+  background-color: #d7f8d0;
+  color: #276918;
+}
+
+.badge-diff-medium {
+  background-color: var(--butter-yellow);
+  color: var(--butter-yellow-dark);
+}
+
+.badge-diff-hard {
+  background-color: #ffd4cb;
+  color: #9c2817;
+}
+
+.badge-veg-yes {
+  background-color: #daf5de;
+  color: #206d2a;
+}
+
+.badge-veg-no {
+  background-color: #ffdde5;
+  color: #8b253b;
+}
+
+/* Hộp nguyên liệu còn thiếu */
+.missing-ingredients-box {
+  background-color: #fff9f0;
+  border: 2px dashed #e69d45;
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #8f5310;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.missing-ingredients-box.all-good {
+  background-color: #effbf4;
+  border-color: #3e8b6e;
+  color: #1a573f;
+}
+
+/* Các bước nấu ngắn gọn */
+.cooking-steps-section {
+  background-color: var(--bg-cream);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  border-left: 3.5px solid var(--candy-pink-deep);
+}
+
+.cooking-steps-title {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cooking-steps-list {
+  padding-left: 1.15rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cacao-brown);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.cooking-steps-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Câu bình luận hài hước */
+.recipe-funny-comment {
+  font-size: 0.82rem;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--cacao-light);
+  background-color: #fffbf5;
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.65rem;
+  border-left: 3px solid var(--butter-yellow-dark);
+  margin-top: auto;
+}
+
+/* Nút tìm quán hoặc xem chi tiết */
+.recipe-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.4rem;
+  border-top: 1.5px dashed rgba(91, 70, 54, 0.2);
+}
+
+.btn-recipe-map {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--cacao-brown);
+  text-decoration: none;
+  background-color: var(--butter-yellow);
+  border: 1.5px solid var(--cacao-brown);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: transform 0.15s ease;
+}
+
+.btn-recipe-map:hover {
+  transform: translateY(-2px);
+  background-color: #ffd980;
+}
+
+/* Responsive cho màn hình di động */
+@media (max-width: 900px) {
+  .fridge-grid-container {
+    grid-template-columns: 1fr;
+  }
+
+  .fridge-title {
+    font-size: 1.75rem;
+  }
+
+  .fridge-options-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .fridge-card {
+    padding: 1.1rem;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fridge-title-row {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}

@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/fridge.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>">
 </head>
 <body>
@@ -25,13 +26,16 @@
                   <p class="app-tagline">Máy gắp thú bông ẩm thực • Chữa dứt điểm bệnh "Ăn gì cũng được"</p>
               </div>
           </div>
-          <!-- Tab điều hướng máy gắp / kho món -->MealMate
+          <!-- Tab điều hướng máy gắp / kho món / tủ lạnh thần kỳ -->
           <nav class="nav-tabs" aria-label="Điều hướng trang">
               <button id="nav-machine" class="nav-btn active" aria-selected="true" role="tab">
                   <span class="icon" aria-hidden="true">🎰</span> Máy Gắp
               </button>
               <button id="nav-catalog" class="nav-btn" aria-selected="false" role="tab">
                   <span class="icon" aria-hidden="true">📖</span> Kho Món (<span id="total-dishes-badge">0</span>)
+              </button>
+              <button id="nav-fridge" class="nav-btn" aria-selected="false" role="tab">
+                  <span class="icon" aria-hidden="true">🧊</span> Tủ Lạnh Thần Kỳ
               </button>
           </nav>
       </div>
@@ -290,6 +294,146 @@
       <!-- Danh sách thẻ món ăn -->
       <div class="dish-grid" id="dish-grid" role="region" aria-label="Danh sách thẻ món ăn">
         <!-- Được vẽ bằng JS -->
+      </div>
+    </section>
+
+    <!-- SECTION 3: TỦ LẠNH THẦN KỲ (AI FRIDGE SCANNER) -->
+    <section id="fridge-view" class="view-section" aria-labelledby="fridge-heading" style="display: none;">
+      <div class="fridge-header">
+        <div class="fridge-title-row">
+          <span class="fridge-title-icon" aria-hidden="true">🧊</span>
+          <h2 id="fridge-heading" class="fridge-title">Tủ Lạnh Thần Kỳ AI</h2>
+        </div>
+        <p class="fridge-subtitle">Chụp ảnh bên trong tủ lạnh nhà bạn, AI sẽ tự động soi nguyên liệu và mách nước những món ngon dễ nấu nhất!</p>
+        <div>
+          <span class="fridge-disclaimer">
+            <span class="disclaimer-icon" aria-hidden="true">🔒</span>
+            Ảnh được gửi tới Google Gemini để phân tích, đừng chụp thông tin cá nhân.
+          </span>
+        </div>
+      </div>
+
+      <div class="fridge-grid-container">
+        <!-- CỘT BÊN TRÁI: BƯỚC 1 - CHỌN/CHỤP ẢNH & SOI TỦ LẠNH -->
+        <div class="fridge-card">
+          <div class="fridge-step-badge">BƯỚC 1</div>
+          <h3 class="fridge-card-title">
+            <span aria-hidden="true">📸</span> Chụp hoặc Chọn ảnh tủ lạnh
+          </h3>
+
+          <!-- Input file ẩn hỗ trợ camera trên điện thoại & file trên máy tính -->
+          <input type="file" id="fridge-file-input" accept="image/*" capture="environment" style="display: none;">
+
+          <!-- Khung kéo thả ảnh / dropzone -->
+          <div class="dropzone-wrapper" id="fridge-dropzone" role="button" tabindex="0" aria-label="Kéo thả hoặc bấm để chọn ảnh tủ lạnh">
+            <div class="dropzone-content" id="dropzone-content">
+              <span class="dropzone-illustration" aria-hidden="true">📥</span>
+              <p class="dropzone-instruction">Kéo thả ảnh vào đây</p>
+              <p class="dropzone-subtext">hoặc</p>
+              <button type="button" class="btn-upload-trigger">
+                <span aria-hidden="true">📷</span> Chụp / Chọn ảnh
+              </button>
+              <p class="dropzone-subtext" style="margin-top: 4px;">Hỗ trợ ảnh PNG, JPG, WEBP (Tối đa 8MB)</p>
+            </div>
+
+            <!-- Khung xem trước ảnh sau khi chọn -->
+            <div class="image-preview-container" id="image-preview-wrap" style="display: none;">
+              <div class="preview-frame">
+                <img id="preview-img" class="preview-img" src="" alt="Ảnh chụp tủ lạnh">
+              </div>
+              <div class="preview-info">
+                <span id="preview-info">Đã chọn ảnh</span>
+                <button type="button" id="btn-change-image" class="btn-change-image">Đổi ảnh khác</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nút hành động Soi tủ lạnh -->
+          <button type="button" id="btn-scan-fridge" class="btn-fridge-action" disabled>
+            <span aria-hidden="true">🔍</span> Soi Tủ Lạnh
+          </button>
+        </div>
+
+        <!-- CỘT BÊN PHẢI: BƯỚC 2 - XEM NGUYÊN LIỆU & GỢI Ý MÓN -->
+        <div class="fridge-card">
+          <div class="fridge-step-badge">BƯỚC 2</div>
+          <h3 class="fridge-card-title">
+            <span aria-hidden="true">🥦</span> Nguyên liệu nhận diện được
+          </h3>
+
+          <!-- Danh sách Chips nguyên liệu -->
+          <div class="ingredients-section">
+            <div class="ingredients-chips-wrap" id="ingredients-chips" aria-live="polite">
+              <span class="empty-chips-hint">Chưa có nguyên liệu nào. Hãy chụp ảnh tủ lạnh ở Bước 1 hoặc nhập tay bên dưới nhé! ✨</span>
+            </div>
+
+            <!-- Nhập tay thêm nguyên liệu -->
+            <div class="add-ingredient-form">
+              <input type="text" id="input-ingredient-manual" class="input-ingredient-manual" 
+                     placeholder="Nhập thêm món (vd: thịt bò, trứng, nấm...)" aria-label="Thêm nguyên liệu thủ công">
+              <button type="button" id="btn-add-ingredient" class="btn-add-ingredient">
+                <span aria-hidden="true">➕</span> Thêm
+              </button>
+            </div>
+          </div>
+
+          <!-- Tùy chọn: Chay/Mặn & Số người ăn -->
+          <div class="fridge-options-row">
+            <div class="servings-control">
+              <span class="servings-label"><span aria-hidden="true">👥</span> Số người ăn:</span>
+              <div class="servings-stepper">
+                <button type="button" id="btn-step-minus" class="btn-step" aria-label="Giảm 1 người">-</button>
+                <span id="servings-value" class="servings-value">2</span>
+                <button type="button" id="btn-step-plus" class="btn-step" aria-label="Tăng 1 người">+</button>
+              </div>
+            </div>
+
+            <label class="toggle-container" for="fridge-veg-switch" style="cursor: pointer;">
+              <div class="toggle-info">
+                <span class="toggle-emoji" aria-hidden="true" style="font-size: 1.3rem;">🥗</span>
+                <span class="toggle-label" style="font-size: 0.95rem;">Chỉ món chay</span>
+              </div>
+              <div class="switch-box" style="transform: scale(0.85);">
+                <input type="checkbox" id="fridge-veg-switch" role="switch" aria-checked="false">
+                <span class="slider round"></span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Nút hành động Gợi ý món -->
+          <button type="button" id="btn-suggest-recipes" class="btn-fridge-action btn-fridge-suggest" disabled>
+            <span aria-hidden="true">✨</span> Gợi Ý Món Nấu Ngay!
+          </button>
+        </div>
+      </div>
+
+      <!-- Trạng thái chờ xoay vòng câu nói hài hước -->
+      <div id="fridge-loading-box" class="fridge-loading-box" style="display: none;" aria-live="polite">
+        <div class="loading-spinner-mascot" aria-hidden="true">🍳</div>
+        <p id="loading-funny-text" class="loading-funny-text">Đang lục lọi từng ngóc ngách trong tủ lạnh... 🔍</p>
+        <span class="loading-subhint">Chờ tí xíu nhé, đầu bếp AI đang tư duy công thức đỉnh chóp!</span>
+      </div>
+
+      <!-- Trạng thái lỗi có nút thử lại -->
+      <div id="fridge-error-box" class="fridge-error-box" style="display: none;" aria-live="assertive">
+        <span class="error-mascot" aria-hidden="true">🤕</span>
+        <p id="error-message" class="error-message">Ối! Có lỗi xảy ra rồi.</p>
+        <button type="button" id="btn-retry" class="btn-retry">
+          <span aria-hidden="true">🔄</span> Thử lại phát nữa
+        </button>
+      </div>
+
+      <!-- Khu vực hiển thị danh sách 3 - 5 món ăn gợi ý -->
+      <div id="suggested-recipes-container" class="suggested-recipes-container" style="display: none;" aria-live="polite">
+        <div class="recipes-header-row">
+          <h3 class="recipes-title">
+            <span aria-hidden="true">🍽️</span> Món Ngon Có Thể Nấu Ngay:
+          </h3>
+          <span id="recipes-count-badge" class="recipes-count-pill">0 món</span>
+        </div>
+        <div id="recipes-grid" class="recipes-grid">
+          <!-- Render bằng JS -->
+        </div>
       </div>
     </section>
 

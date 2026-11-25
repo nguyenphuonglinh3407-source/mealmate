@@ -5,7 +5,12 @@ Thumbs.db
 node_modules/
 .vscode/
 .idea/
-
 .vs/
 
-.vs/
+# Cloudflare Worker secrets & local env
+worker/.dev.vars
+.dev.vars
+.env
+.env.*
+*.secret
+.wrangler/

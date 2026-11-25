@@ -6,6 +6,7 @@
 import { DISHES, getFilteredDishes } from '../data/dishes.js';
 import { rollGacha, getRarityByPrice } from './gacha.js';
 import { getHistory, addHistoryItem, clearHistory } from './storage.js';
+import { initFridge } from './fridge.js';
 
 // ============================================================================
 // 1. TRẠNG THÁI ỨNG DỤNG (APP STATE)
@@ -26,8 +27,10 @@ const dom = {
   // Tabs điều hướng
   navMachine: document.getElementById('nav-machine'),
   navCatalog: document.getElementById('nav-catalog'),
+  navFridge: document.getElementById('nav-fridge'),
   machineView: document.getElementById('machine-view'),
   catalogView: document.getElementById('catalog-view'),
+  fridgeView: document.getElementById('fridge-view'),
   totalDishesBadge: document.getElementById('total-dishes-badge'),
 
   // Bộ lọc bên máy gắp
@@ -135,6 +138,9 @@ function init() {
   // Khởi tạo danh sách kho món
   renderCatalog();
 
+  // Khởi tạo tính năng Tủ Lạnh Thần Kỳ AI
+  initFridge();
+
   // Đăng ký các sự kiện tương tác
   bindEvents();
 }
@@ -164,9 +170,10 @@ function populatePlushiePit() {
  * Lắng nghe toàn bộ sự kiện từ người dùng
  */
 function bindEvents() {
-  // Chuyển tab giữa Máy Gắp và Kho Món
+  // Chuyển tab giữa Máy Gắp, Kho Món và Tủ Lạnh Thần Kỳ
   dom.navMachine.addEventListener('click', () => switchTab('machine'));
   dom.navCatalog.addEventListener('click', () => switchTab('catalog'));
+  dom.navFridge.addEventListener('click', () => switchTab('fridge'));
 
   // Chọn loại món ăn (Chips)
   dom.chips.forEach(chip => {
@@ -271,25 +278,36 @@ function bindEvents() {
 }
 
 /**
- * Chuyển tab giữa Máy gắp và Kho món
+ * Chuyển tab giữa Máy gắp, Kho món và Tủ lạnh thần kỳ
  */
 function switchTab(tabName) {
   state.activeTab = tabName;
+  // Reset trạng thái các nút tab
+  dom.navMachine.classList.remove('active');
+  dom.navMachine.setAttribute('aria-selected', 'false');
+  dom.navCatalog.classList.remove('active');
+  dom.navCatalog.setAttribute('aria-selected', 'false');
+  dom.navFridge.classList.remove('active');
+  dom.navFridge.setAttribute('aria-selected', 'false');
+
+  // Ẩn tất cả các view
+  dom.machineView.style.display = 'none';
+  dom.catalogView.style.display = 'none';
+  dom.fridgeView.style.display = 'none';
+
   if (tabName === 'machine') {
     dom.navMachine.classList.add('active');
     dom.navMachine.setAttribute('aria-selected', 'true');
-    dom.navCatalog.classList.remove('active');
-    dom.navCatalog.setAttribute('aria-selected', 'false');
     dom.machineView.style.display = 'grid';
-    dom.catalogView.style.display = 'none';
-  } else {
+  } else if (tabName === 'catalog') {
     dom.navCatalog.classList.add('active');
     dom.navCatalog.setAttribute('aria-selected', 'true');
-    dom.navMachine.classList.remove('active');
-    dom.navMachine.setAttribute('aria-selected', 'false');
-    dom.machineView.style.display = 'none';
     dom.catalogView.style.display = 'block';
     renderCatalog();
+  } else if (tabName === 'fridge') {
+    dom.navFridge.classList.add('active');
+    dom.navFridge.setAttribute('aria-selected', 'true');
+    dom.fridgeView.style.display = 'flex';
   }
 }
 

@@ -1,0 +1,10 @@
+name = "mealmate-ai-worker"
+main = "worker/index.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+ENVIRONMENT = "production"
+
+# Lưu ý: Bí mật GEMINI_API_KEY KHÔNG đặt ở đây.
+# Hãy đặt bảo mật qua lệnh:
+# npx wrangler secret put GEMINI_API_KEY

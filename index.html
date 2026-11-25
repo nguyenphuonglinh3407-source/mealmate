@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MealMate - Máy Gắp Thú Bông Ăn Trưa Hài Hước</title>
-  <meta name="description" content="Web app gợi ý món ăn ngẫu nhiên theo ngân sách dạng máy gắp thú bông pastel hài hước, giải cứu mọi cơn đau đầu vì câu hỏi 'Trưa nay ăn gì?'.">
+  <title>MealMate - Máy Gắp Thú Bông Ẩm Thực Hài Hước</title>
+  <meta name="description" content="Web app gợi ý món ăn ngẫu nhiên theo ngân sách dạng máy gắp thú bông pastel hài hước, giải cứu mọi cơn đau đầu vì câu hỏi 'Hôm nay ăn gì?'.">
 
   <!-- Google Fonts: Baloo 2 cho tiêu đề & Nunito cho nội dung -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,8 +59,14 @@
             <button type="button" class="chip active" data-category="all" role="radio" aria-checked="true">
               <span class="chip-emoji" aria-hidden="true">✨</span> Tất cả
             </button>
+            <button type="button" class="chip" data-category="breakfast" role="radio" aria-checked="false">
+              <span class="chip-emoji" aria-hidden="true">🍳</span> Ăn sáng
+            </button>
             <button type="button" class="chip" data-category="lunch" role="radio" aria-checked="false">
               <span class="chip-emoji" aria-hidden="true">🍛</span> Ăn trưa
+            </button>
+            <button type="button" class="chip" data-category="dinner" role="radio" aria-checked="false">
+              <span class="chip-emoji" aria-hidden="true">🍲</span> Ăn tối
             </button>
             <button type="button" class="chip" data-category="drink" role="radio" aria-checked="false">
               <span class="chip-emoji" aria-hidden="true">🧋</span> Đồ uống
@@ -273,11 +279,13 @@
       <div class="catalog-toolbar">
         <div class="catalog-filter-chips" role="group" aria-label="Bộ lọc kho món">
           <button type="button" class="cat-filter-btn active" data-cat="all">Tất cả</button>
+          <button type="button" class="cat-filter-btn" data-cat="breakfast">Ăn sáng (22)</button>
           <button type="button" class="cat-filter-btn" data-cat="lunch">Ăn trưa (32)</button>
+          <button type="button" class="cat-filter-btn" data-cat="dinner">Ăn tối (26)</button>
           <button type="button" class="cat-filter-btn" data-cat="drink">Đồ uống (22)</button>
           <button type="button" class="cat-filter-btn" data-cat="snack">Ăn vặt (18)</button>
           <button type="button" class="cat-filter-btn" data-cat="party">Món nhậu (18)</button>
-          <button type="button" class="cat-filter-btn veg-filter" data-cat="veg">Chỉ món chay (47)</button>
+          <button type="button" class="cat-filter-btn veg-filter" data-cat="veg">Chỉ món chay (66)</button>
         </div>
 
         <div class="catalog-search-wrap">

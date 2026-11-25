@@ -1,7 +1,9 @@
 /**
  * Danh sách món ăn cho web app "MealMate"
  * Phân loại:
+ * - 'breakfast': Ăn sáng
  * - 'lunch': Ăn trưa
+ * - 'dinner': Ăn tối
  * - 'drink': Đồ uống
  * - 'snack': Ăn vặt
  * - 'party': Món nhậu
@@ -9,7 +11,209 @@
 
 export const DISHES = [
   // ==========================================
-  // 1. ĂN TRƯA (LUNCH) - 32 món (nhiều món chay)
+  // 1. ĂN SÁNG (BREAKFAST) - 22 món
+  // ==========================================
+  {
+    id: 'b01',
+    name: 'Phở bò tái lăn Hà Nội',
+    category: 'breakfast',
+    price: 50000,
+    vegetarian: false,
+    emoji: '🍜',
+    comment: 'Bò xào lửa lớn thơm nức mùi gừng tỏi, húp ngụm nước dùng tỉnh cả ngái ngủ.'
+  },
+  {
+    id: 'b02',
+    name: 'Phở gà ta lá chanh thanh ngọt',
+    category: 'breakfast',
+    price: 45000,
+    vegetarian: false,
+    emoji: '🐔',
+    comment: 'Thịt gà ta da giòn thịt ngọt, rắc lá chanh thái chỉ thơm bừng buổi sớm.'
+  },
+  {
+    id: 'b03',
+    name: 'Phở nấm rơm đậu hũ nước dùng hồi quế chay',
+    category: 'breakfast',
+    price: 30000,
+    vegetarian: true,
+    emoji: '🍜',
+    comment: 'Nước dùng củ quả ngọt lành, bắt đầu ngày mới nhẹ nhàng an yên.'
+  },
+  {
+    id: 'b04',
+    name: 'Bánh mì ốp la hai trứng xíu mại',
+    category: 'breakfast',
+    price: 25000,
+    vegetarian: false,
+    emoji: '🍳',
+    comment: 'Lòng đỏ lòng đào béo ngậy chấm bánh mì giòn rụm, sáng ra tràn trề năng lượng.'
+  },
+  {
+    id: 'b05',
+    name: 'Bánh mì que cay Hải Phòng',
+    category: 'breakfast',
+    price: 15000,
+    vegetarian: false,
+    emoji: '🥖',
+    comment: 'Gọn gàng vừa tay cầm vừa chạy xe, chí chương cay tê đầu lưỡi.'
+  },
+  {
+    id: 'b06',
+    name: 'Bánh mì bơ sữa nướng giòn rụm',
+    category: 'breakfast',
+    price: 15000,
+    vegetarian: true,
+    emoji: '🥖',
+    comment: 'Ngọt ngào béo thơm mùi bơ sữa tuổi thơ, siêu rẻ mà ấm bụng.'
+  },
+  {
+    id: 'b07',
+    name: 'Bánh cuốn nóng nhân thịt mộc nhĩ hành phi',
+    category: 'breakfast',
+    price: 30000,
+    vegetarian: false,
+    emoji: '🥟',
+    comment: 'Bánh tráng mỏng tang ướt mềm, chấm nước mắm cà cuống thơm lừng.'
+  },
+  {
+    id: 'b08',
+    name: 'Bánh cuốn chay nhân nấm hương củ sắn',
+    category: 'breakfast',
+    price: 20000,
+    vegetarian: true,
+    emoji: '🥟',
+    comment: 'Thanh mát chấm nước tương tỏi ớt, ăn bao nhiêu đĩa cũng không ngán.'
+  },
+  {
+    id: 'b09',
+    name: 'Xôi xéo mỡ hành đậu xanh ruốc thịt',
+    category: 'breakfast',
+    price: 20000,
+    vegetarian: false,
+    emoji: '🍚',
+    comment: 'Hạt xôi vàng ươm dẻo quánh, lát đậu xanh bùi bùi xắn đẫm mỡ hành.'
+  },
+  {
+    id: 'b10',
+    name: 'Xôi bắp nếp dừa nạo đậu xanh chay',
+    category: 'breakfast',
+    price: 15000,
+    vegetarian: true,
+    emoji: '🌽',
+    comment: 'Hạt bắp dẻo bung hạt sen dừa nạo, gói lá chuối thơm nức mùi quê.'
+  },
+  {
+    id: 'b11',
+    name: 'Xôi gấc đỏ đậu phộng đường dừa chay',
+    category: 'breakfast',
+    price: 15000,
+    vegetarian: true,
+    emoji: '🍧',
+    comment: 'Sắc đỏ may mắn cho cả ngày suôn sẻ, ngọt thơm béo ngậy vị dừa.'
+  },
+  {
+    id: 'b12',
+    name: 'Bún mọc sườn non dọc mùng',
+    category: 'breakfast',
+    price: 40000,
+    vegetarian: false,
+    emoji: '🥣',
+    comment: 'Viên mọc nấm giòn sần sật, dọc mùng thanh mát chua dịu vị sấu.'
+  },
+  {
+    id: 'b13',
+    name: 'Bún thang ngũ sắc phố cổ Hà Nội',
+    category: 'breakfast',
+    price: 55000,
+    vegetarian: false,
+    emoji: '🍲',
+    comment: 'Cầu kỳ tinh tế như một tác phẩm nghệ thuật, nước dùng ngọt sâu thăm thẳm.'
+  },
+  {
+    id: 'b14',
+    name: 'Bún riêu chay giò nấm đậu hũ',
+    category: 'breakfast',
+    price: 25000,
+    vegetarian: true,
+    emoji: '🥘',
+    comment: 'Chua thanh vị giấm bỗng tự nhiên, riêu đậu bồng bềnh đưa miệng.'
+  },
+  {
+    id: 'b15',
+    name: 'Cháo lòng heo dồi chiên giòn',
+    category: 'breakfast',
+    price: 35000,
+    vegetarian: false,
+    emoji: '🥣',
+    comment: 'Bát cháo sánh mịn cay nồng hạt tiêu, ấm sực người những sáng se lạnh.'
+  },
+  {
+    id: 'b16',
+    name: 'Cháo đậu xanh đường phèn quẩy nóng',
+    category: 'breakfast',
+    price: 15000,
+    vegetarian: true,
+    emoji: '🥣',
+    comment: 'Mát ruột bổ tỳ, món cháo mộc mạc nuôi lớn biết bao thế hệ học trò.'
+  },
+  {
+    id: 'b17',
+    name: 'Cháo nấm yến mạch củ sen chay',
+    category: 'breakfast',
+    price: 25000,
+    vegetarian: true,
+    emoji: '🥣',
+    comment: 'Bổ dưỡng nhẹ bụng, chuẩn chế độ ăn healthy thanh lọc cơ thể.'
+  },
+  {
+    id: 'b18',
+    name: 'Bánh bao xá xíu trứng cút nóng hổi',
+    category: 'breakfast',
+    price: 20000,
+    vegetarian: false,
+    emoji: '🥟',
+    comment: 'Vỏ bánh trắng phau xốp mềm, cắn ngập chân răng nhân thịt đậm đà.'
+  },
+  {
+    id: 'b19',
+    name: 'Bánh bao chay nhân nấm miến mộc nhĩ',
+    category: 'breakfast',
+    price: 15000,
+    vegetarian: true,
+    emoji: '🥟',
+    comment: 'Nhân nấm xào thơm tiêu đen, ấm nóng đôi tay sớm mùa đông.'
+  },
+  {
+    id: 'b20',
+    name: 'Hủ tiếu mì gõ sườn heo trứng cút',
+    category: 'breakfast',
+    price: 30000,
+    vegetarian: false,
+    emoji: '🍜',
+    comment: 'Âm thanh gõ lách cách thân quen, sợi hủ tiếu dai dai chan nước hầm xương.'
+  },
+  {
+    id: 'b21',
+    name: 'Miến lươn giòn xào rau răm cay nồng',
+    category: 'breakfast',
+    price: 50000,
+    vegetarian: false,
+    emoji: '🍲',
+    comment: 'Thịt lươn chiên giòn tan trong miệng, cay xè hạt tiêu đập tan cơn ngái ngủ.'
+  },
+  {
+    id: 'b22',
+    name: 'Bánh mì bơ tỏi xúc xích phô mai',
+    category: 'breakfast',
+    price: 30000,
+    vegetarian: false,
+    emoji: '🥖',
+    comment: 'Ngập tràn phô mai béo ngậy kéo sợi, ăn xong tỉnh táo học tập cả sáng.'
+  },
+
+  // ==========================================
+  // 2. ĂN TRƯA (LUNCH) - 32 món
   // ==========================================
   {
     id: 'l01',
@@ -60,7 +264,7 @@ export const DISHES = [
     id: 'l06',
     name: 'Bánh mì thịt nướng patê',
     category: 'lunch',
-    price: 25000,
+    price: 20000,
     vegetarian: false,
     emoji: '🥖',
     comment: 'Nhanh - gọn - giòn rụm, cứu rỗi những buổi trưa chạy deadline sấp mặt.'
@@ -202,7 +406,7 @@ export const DISHES = [
   },
   {
     id: 'l22',
-    name: 'Cơm niêu đậu hũ sốt cà nấm kho tiêu',
+    name: 'Cơm niêu đậu hũ sốt cà nấm kho tiêu chay',
     category: 'lunch',
     price: 45000,
     vegetarian: true,
@@ -294,14 +498,252 @@ export const DISHES = [
     id: 'l32',
     name: 'Cơm chay thập cẩm tự chọn 5 món',
     category: 'lunch',
-    price: 25000,
+    price: 20000,
     vegetarian: true,
     emoji: '🥗',
     comment: 'Món ăn quốc dân của sinh viên cuối tháng: siêu no, siêu rẻ, bổ dưỡng!'
   },
 
   // ==========================================
-  // 2. ĐỒ UỐNG (DRINK) - 22 món (đa phần chay)
+  // 3. ĂN TỐI (DINNER) - 26 món
+  // ==========================================
+  {
+    id: 'dn01',
+    name: 'Cơm gia đình sườn xào chua ngọt canh cua',
+    category: 'dinner',
+    price: 65000,
+    vegetarian: false,
+    emoji: '🍲',
+    comment: 'Cơm nóng dẻo thơm, sườn óng ánh sốt chua ngọt chuẩn vị mâm cơm mẹ nấu.'
+  },
+  {
+    id: 'dn02',
+    name: 'Cơm gia đình đậu sốt cà canh rau ngót chay',
+    category: 'dinner',
+    price: 20000,
+    vegetarian: true,
+    emoji: '🍱',
+    comment: 'Bữa cơm tối đạm bạc mà ấm áp tình thân, nhẹ bụng ngủ ngon không lo mỡ.'
+  },
+  {
+    id: 'dn03',
+    name: 'Cơm rang trứng hành hoa tép khô',
+    category: 'dinner',
+    price: 20000,
+    vegetarian: false,
+    emoji: '🍳',
+    comment: 'Đơn giản mà gây nghiện, hạt cơm săn giòn vàng ruộm cứu đói cuối tháng.'
+  },
+  {
+    id: 'dn04',
+    name: 'Cơm chiên tỏi ớt nấm đùi gà chay',
+    category: 'dinner',
+    price: 20000,
+    vegetarian: true,
+    emoji: '🍳',
+    comment: 'Hạt cơm thơm nức mũi mùi tỏi phi, nấm dai ngọt sần sật.'
+  },
+  {
+    id: 'dn05',
+    name: 'Cá bống kho tiêu niêu đất canh chua',
+    category: 'dinner',
+    price: 90000,
+    vegetarian: false,
+    emoji: '🐟',
+    comment: 'Nước kho keo quánh đậm đà ăn kèm canh chua thanh mát, vét cạn nồi cơm.'
+  },
+  {
+    id: 'dn06',
+    name: 'Thịt kho tàu nước dừa trứng vịt',
+    category: 'dinner',
+    price: 60000,
+    vegetarian: false,
+    emoji: '🥘',
+    comment: 'Miếng thịt vuông vức mềm rục, mỡ trong veo béo ngậy tan ngay đầu lưỡi.'
+  },
+  {
+    id: 'dn07',
+    name: 'Nấm rơm đậu hũ kho tiêu đen chay',
+    category: 'dinner',
+    price: 35000,
+    vegetarian: true,
+    emoji: '🍲',
+    comment: 'Thấm đượm sốt tương sánh đặc, cay nồng hạt tiêu ấm sực bữa tối se lạnh.'
+  },
+  {
+    id: 'dn08',
+    name: 'Lẩu bò nhúng giấm ba chỉ bò Mỹ',
+    category: 'dinner',
+    price: 180000,
+    vegetarian: false,
+    emoji: '🍲',
+    comment: 'Nước dùng chua ngọt sôi sục, cuốn bánh tráng rau rừng chấm mắm nêm đã đời.'
+  },
+  {
+    id: 'dn09',
+    name: 'Lẩu gà lá é Phú Yên cay nồng',
+    category: 'dinner',
+    price: 160000,
+    vegetarian: false,
+    emoji: '🍲',
+    comment: 'Hương vị đặc sản phố núi, vị the the của lá é hòa quyện vị ngọt của gà ta.'
+  },
+  {
+    id: 'dn10',
+    name: 'Lẩu nấm chay thập cẩm rau xanh',
+    category: 'dinner',
+    price: 120000,
+    vegetarian: true,
+    emoji: '🍄',
+    comment: 'Nồi lẩu thanh khiết 7 loại nấm tươi ngọt lịm tự nhiên, detox cơ thể buổi tối.'
+  },
+  {
+    id: 'dn11',
+    name: 'Lẩu Thái hải sản Tomyum chua cay',
+    category: 'dinner',
+    price: 220000,
+    vegetarian: false,
+    emoji: '🦐',
+    comment: 'Mực tôm nghêu tươi rói, nước lẩu cốt dừa sả ớt húp đến đâu ấm đến đấy.'
+  },
+  {
+    id: 'dn12',
+    name: 'Bò nướng tảng sốt tiêu đen phô mai',
+    category: 'dinner',
+    price: 150000,
+    vegetarian: false,
+    emoji: '🥩',
+    comment: 'Thịt bò mềm mọng nước xèo xèo trên đĩa gang, cuộn phô mai béo ngậy.'
+  },
+  {
+    id: 'dn13',
+    name: 'Nấm đùi gà và đậu bắp nướng chao chay',
+    category: 'dinner',
+    price: 50000,
+    vegetarian: true,
+    emoji: '🍄',
+    comment: 'Mùi chao nướng thơm ngất ngây, ăn kèm rau sống mát rượi.'
+  },
+  {
+    id: 'dn14',
+    name: 'Bún bò giò gân chả cua buổi tối',
+    category: 'dinner',
+    price: 55000,
+    vegetarian: false,
+    emoji: '🍜',
+    comment: 'Bát bún bốc khói nghi ngút, gân bò dẻo quánh, nước lèo nồng nàn mùi sả.'
+  },
+  {
+    id: 'dn15',
+    name: 'Hủ tiếu sa tế bò đậu phộng cay nồng',
+    category: 'dinner',
+    price: 60000,
+    vegetarian: false,
+    emoji: '🍜',
+    comment: 'Vị bùi béo của đậu phộng rang quyện sa tế cay xé lưỡi, ăn xong toát mồ hôi nhẹ người.'
+  },
+  {
+    id: 'dn16',
+    name: 'Hủ tiếu Nam Vang chay nấm đông cô',
+    category: 'dinner',
+    price: 35000,
+    vegetarian: true,
+    emoji: '🥣',
+    comment: 'Nước hầm củ quả trong veo thanh đạm, sợi hủ tiếu dai ngon dễ tiêu hóa.'
+  },
+  {
+    id: 'dn17',
+    name: 'Miến gà đùi xé nấm hương măng khô',
+    category: 'dinner',
+    price: 50000,
+    vegetarian: false,
+    emoji: '🍲',
+    comment: 'Sợi miến dong trong suốt ngấm nước luộc gà béo ngọt, ấm bụng đêm muộn.'
+  },
+  {
+    id: 'dn18',
+    name: 'Miến xào nấm rau củ hạt sen chay',
+    category: 'dinner',
+    price: 35000,
+    vegetarian: true,
+    emoji: '🥗',
+    comment: 'Sợi miến tơi mềm óng ả, hạt sen bùi bùi ăn no mà không lo nặng bụng.'
+  },
+  {
+    id: 'dn19',
+    name: 'Bánh xèo miền Tây tôm thịt giòn rụm',
+    category: 'dinner',
+    price: 45000,
+    vegetarian: false,
+    emoji: '🥞',
+    comment: 'Vỏ vàng giòn tan cuốn xấp rau cải xanh, chấm mắm chua ngọt rôm rốp vui tai.'
+  },
+  {
+    id: 'dn20',
+    name: 'Bánh xèo chay nấm kim châm đậu xanh',
+    category: 'dinner',
+    price: 35000,
+    vegetarian: true,
+    emoji: '🥞',
+    comment: 'Nước cốt dừa thơm béo, nấm giòn ngọt tự nhiên cuốn rau tươi mát lành.'
+  },
+  {
+    id: 'dn21',
+    name: 'Gà nướng muối ớt nguyên con sốt tiêu xanh',
+    category: 'dinner',
+    price: 200000,
+    vegetarian: false,
+    emoji: '🍗',
+    comment: 'Da vàng óng giòn cay, thịt ngọt mềm chấm muối ớt sữa đặc ngon muốn xỉu.'
+  },
+  {
+    id: 'dn22',
+    name: 'Cháo ếch Singapore niêu đất cay xè',
+    category: 'dinner',
+    price: 75000,
+    vegetarian: false,
+    emoji: '🐸',
+    comment: 'Thịt ếch kho kẹo sánh đậm màu nâu cánh gián, rưới đẫm lên bát cháo trắng thơm lừng.'
+  },
+  {
+    id: 'dn23',
+    name: 'Canh rong biển đậu hũ non hạt sen chay',
+    category: 'dinner',
+    price: 30000,
+    vegetarian: true,
+    emoji: '🥣',
+    comment: 'Thanh lọc độc tố, đậu hũ mềm mướt tan trong miệng giúp ngủ sâu giấc.'
+  },
+  {
+    id: 'dn24',
+    name: 'Cơm niêu cá thu sốt cà canh chua bắp chuối',
+    category: 'dinner',
+    price: 85000,
+    vegetarian: false,
+    emoji: '🍛',
+    comment: 'Cơm cháy giòn rụm dưới đáy niêu, cá thu tươi ngọt thịt sốt cà đậm vị.'
+  },
+  {
+    id: 'dn25',
+    name: 'Cơm niêu nấm kho tiêu nấm đùi gà chay',
+    category: 'dinner',
+    price: 45000,
+    vegetarian: true,
+    emoji: '🍛',
+    comment: 'Cơm cháy giòn tan quẹt sốt nấm kho quánh, đơn giản mà gây nghiện.'
+  },
+  {
+    id: 'dn26',
+    name: 'Lẩu cua đồng bắp bò sườn sụn',
+    category: 'dinner',
+    price: 230000,
+    vegetarian: false,
+    emoji: '🦀',
+    comment: 'Ria cua bồng bềnh thơm mùi giấm bỗng, tụ tập bạn bè bữa tối là tuyệt đỉnh.'
+  },
+
+  // ==========================================
+  // 4. ĐỒ UỐNG (DRINK) - 22 món
   // ==========================================
   {
     id: 'd01',
@@ -479,7 +921,7 @@ export const DISHES = [
     name: 'Cà phê trứng sủi bọt ngậy béo',
     category: 'drink',
     price: 45000,
-    vegetarian: false, // có lòng đỏ trứng gà tươi
+    vegetarian: false,
     emoji: '🥚',
     comment: 'Kem trứng đánh bông mịn như mây, thơm lừng hương cà phê robusta nồng đượm.'
   },
@@ -503,7 +945,7 @@ export const DISHES = [
   },
 
   // ==========================================
-  // 3. ĂN VẶT (SNACK) - 18 món
+  // 5. ĂN VẶT (SNACK) - 18 món
   // ==========================================
   {
     id: 's01',
@@ -669,7 +1111,7 @@ export const DISHES = [
   },
 
   // ==========================================
-  // 4. MÓN NHẬU (PARTY) - 18 món
+  // 6. MÓN NHẬU (PARTY) - 18 món
   // ==========================================
   {
     id: 'p01',
@@ -712,7 +1154,7 @@ export const DISHES = [
     name: 'Đậu hũ lướt ván mỡ hành chấm mắm tôm',
     category: 'party',
     price: 40000,
-    vegetarian: false, // mắm tôm
+    vegetarian: false,
     emoji: '🧈',
     comment: 'Đậu mềm như lụa, lướt chảo vàng mặt, mỡ hành xanh mướt ngậy béo.'
   },
@@ -720,7 +1162,7 @@ export const DISHES = [
     id: 'p06',
     name: 'Đậu hũ non tẩm bột chiên xù sốt tương cay chay',
     category: 'party',
-    price: 40000,
+    price: 20000,
     vegetarian: true,
     emoji: '🧈',
     comment: 'Mồi nhắm chay bất bại, vừa rẻ vừa bén, ngồi lai rai tới bến.'
@@ -729,7 +1171,7 @@ export const DISHES = [
     id: 'p07',
     name: 'Lạc rang tỏi ớt húng quế mằn mặn',
     category: 'party',
-    price: 25000,
+    price: 20000,
     vegetarian: true,
     emoji: '🥜',
     comment: 'Món quốc dân bàn nhậu: đĩa lạc nhỏ nhưng kéo dài câu chuyện thâu đêm.'

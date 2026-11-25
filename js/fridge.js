@@ -324,17 +324,28 @@ export function initFridge() {
       let ingredientsResult = [];
 
       if (API_URL && API_URL.trim() !== "") {
-        // Gửi ảnh tới Backend AI thực tế
-        const response = await fetch(`${API_URL}/api/scan-fridge`, {
+        // Gửi ảnh tới Backend AI thực tế (Cloudflare Worker)
+        const response = await fetch(`${API_URL}/detect`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ image: fridgeState.resizedBase64 })
         });
 
         if (!response.ok) {
-          throw new Error(`Máy chủ báo lỗi (${response.status}): Tủ lạnh hơi tối, AI nhìn chưa rõ!`);
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error || `Máy chủ báo lỗi (${response.status}): Tủ lạnh hơi tối, AI nhìn chưa rõ!`);
         }
         const data = await response.json();
+
+        // Nếu ảnh không chứa thực phẩm
+        if (data.hasFood === false || !data.ingredients || data.ingredients.length === 0) {
+          showError(data.message || "Không thấy đồ ăn đâu cả, bạn có chụp nhầm tủ quần áo hay kệ sách không đấy? 🧐");
+          fridgeState.ingredients = [];
+          renderIngredientsChips();
+          btnSuggest.disabled = true;
+          return;
+        }
+
         ingredientsResult = data.ingredients || [];
       } else {
         // Dùng dữ liệu giả lập (Mock) với độ trễ 1.5s
@@ -443,8 +454,8 @@ export function initFridge() {
       let recipesResult = [];
 
       if (API_URL && API_URL.trim() !== "") {
-        // Gọi API backend AI
-        const response = await fetch(`${API_URL}/api/suggest-recipes`, {
+        // Gọi API backend AI (Cloudflare Worker)
+        const response = await fetch(`${API_URL}/suggest`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -455,7 +466,8 @@ export function initFridge() {
         });
 
         if (!response.ok) {
-          throw new Error(`Đầu bếp AI đang bận (${response.status}), xin vui lòng thử lại sau giây lát!`);
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error || `Đầu bếp AI đang bận (${response.status}), xin vui lòng thử lại sau giây lát!`);
         }
         const data = await response.json();
         recipesResult = data.recipes || [];

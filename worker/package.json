@@ -1,0 +1,13 @@
+{
+  "name": "mealmate-ai-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker proxy cho MealMate AI và Google Gemini API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}

@@ -12,7 +12,7 @@ import { initFridge } from './fridge.js';
 // 1. TRẠNG THÁI ỨNG DỤNG (APP STATE)
 // ============================================================================
 const state = {
-  selectedCategory: 'all',     // 'all' | 'lunch' | 'drink' | 'snack' | 'party'
+  selectedCategory: 'all',     // 'all' | 'breakfast' | 'lunch' | 'dinner' | 'drink' | 'snack' | 'party'
   maxBudget: 999999,          // Ngân sách tối đa (VND)
   onlyVegetarian: false,      // Chỉ món chay
   isClawing: false,           // Đang trong tiến trình gắp (khóa nút)
@@ -97,7 +97,9 @@ function formatVND(amount) {
  */
 function getCategoryLabel(category) {
   switch (category) {
+    case 'breakfast': return 'Ăn sáng';
     case 'lunch': return 'Ăn trưa';
+    case 'dinner': return 'Ăn tối';
     case 'drink': return 'Đồ uống';
     case 'snack': return 'Ăn vặt';
     case 'party': return 'Món nhậu';
@@ -137,6 +139,7 @@ function init() {
 
   // Khởi tạo danh sách kho món
   renderCatalog();
+  updateCatalogButtonCounts();
 
   // Khởi tạo tính năng Tủ Lạnh Thần Kỳ AI
   initFridge();
@@ -332,16 +335,30 @@ function updateFilterState() {
     onlyVegetarian: state.onlyVegetarian
   });
 
-  dom.matchingCount.textContent = availableDishes.length;
+  const poolStatusEl = document.querySelector('.pool-status');
 
   if (availableDishes.length === 0) {
     dom.btnClaw.disabled = true;
-    dom.matchingCount.parentElement.style.backgroundColor = '#ffdcd7';
-    dom.matchingCount.parentElement.style.color = '#8b2b1d';
+    const catName = getCategoryLabel(state.selectedCategory);
+    if (poolStatusEl) {
+      poolStatusEl.innerHTML = `
+        <span class="pool-icon" aria-hidden="true">💸</span>
+        Ối giời! Ví hơi thắt lưng buộc bụng rồi! Không có món ${catName !== 'Khác' ? catName : ''} nào dưới ${formatVND(state.maxBudget)} ${state.onlyVegetarian ? 'chay ' : ''}đâu bạn ơi! Hãy tăng ngân sách tí nha! 🥺
+      `;
+      poolStatusEl.style.backgroundColor = '#ffdcd7';
+      poolStatusEl.style.color = '#8b2b1d';
+    }
   } else {
     dom.btnClaw.disabled = false;
-    dom.matchingCount.parentElement.style.backgroundColor = 'var(--lavender-purple)';
-    dom.matchingCount.parentElement.style.color = 'var(--lavender-dark)';
+    if (poolStatusEl) {
+      poolStatusEl.innerHTML = `
+        <span class="pool-icon" aria-hidden="true">🎲</span>
+        Đang có <strong id="matching-count">${availableDishes.length}</strong> món trong máy gắp sẵn sàng phục vụ bạn!
+      `;
+      dom.matchingCount = document.getElementById('matching-count');
+      poolStatusEl.style.backgroundColor = 'var(--lavender-purple)';
+      poolStatusEl.style.color = 'var(--lavender-dark)';
+    }
   }
 }
 
@@ -655,6 +672,34 @@ function renderCatalog() {
     `;
 
     dom.dishGrid.appendChild(card);
+  });
+}
+
+/**
+ * Cập nhật số lượng hiển thị trên các nút danh mục của Kho Món
+ */
+function updateCatalogButtonCounts() {
+  const counts = {
+    all: DISHES.length,
+    breakfast: DISHES.filter(d => d.category === 'breakfast').length,
+    lunch: DISHES.filter(d => d.category === 'lunch').length,
+    dinner: DISHES.filter(d => d.category === 'dinner').length,
+    drink: DISHES.filter(d => d.category === 'drink').length,
+    snack: DISHES.filter(d => d.category === 'snack').length,
+    party: DISHES.filter(d => d.category === 'party').length,
+    veg: DISHES.filter(d => d.vegetarian).length,
+  };
+
+  dom.catFilterBtns.forEach(btn => {
+    const cat = btn.dataset.cat;
+    if (cat === 'all') btn.textContent = `Tất cả (${counts.all})`;
+    else if (cat === 'breakfast') btn.textContent = `Ăn sáng (${counts.breakfast})`;
+    else if (cat === 'lunch') btn.textContent = `Ăn trưa (${counts.lunch})`;
+    else if (cat === 'dinner') btn.textContent = `Ăn tối (${counts.dinner})`;
+    else if (cat === 'drink') btn.textContent = `Đồ uống (${counts.drink})`;
+    else if (cat === 'snack') btn.textContent = `Ăn vặt (${counts.snack})`;
+    else if (cat === 'party') btn.textContent = `Món nhậu (${counts.party})`;
+    else if (cat === 'veg') btn.textContent = `Chỉ món chay (${counts.veg})`;
   });
 }
 

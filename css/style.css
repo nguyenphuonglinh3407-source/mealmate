@@ -1591,10 +1591,109 @@ body {
   color: var(--cacao-brown);
 }
 
-.btn-find-maps:hover {
+.btn-find-maps:hover:not(:disabled) {
   background-color: #ffdc87;
   transform: translateY(-2px);
   box-shadow: var(--shadow-block);
+}
+
+.btn-find-maps:disabled {
+  opacity: 0.65;
+  cursor: wait;
+  transform: none;
+  box-shadow: var(--shadow-block-sm);
+}
+
+/* Lưu ý nhỏ không lưu GPS */
+.location-disclaimer {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--cacao-light);
+  display: block;
+  text-align: center;
+  margin-top: -0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+/* Hộp dự phòng nhập khu vực thủ công */
+.manual-location-box {
+  background-color: #fff9f0;
+  border: 2.5px dashed #e69d45;
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  text-align: left;
+  margin-top: 0.15rem;
+  animation: box-slide-down 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes box-slide-down {
+  0% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.manual-location-msg {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #8f5310;
+  line-height: 1.4;
+}
+
+.manual-location-guide {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #6b3e0c;
+  background: #ffeeda;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border-left: 3.5px solid #d47e22;
+  line-height: 1.4;
+}
+
+.manual-location-form {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.manual-location-input {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.45rem 0.95rem;
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  background-color: var(--white-soft);
+  color: var(--cacao-brown);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.manual-location-input:focus {
+  border-color: #e76985;
+}
+
+.btn-manual-submit {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 800;
+  background-color: var(--mint-green);
+  color: var(--cacao-brown);
+  border: var(--border-medium);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-manual-submit:hover {
+  background-color: #a0e6cb;
+  transform: translateY(-1px);
 }
 
 .btn-regrap {

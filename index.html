@@ -488,9 +488,25 @@
         </div>
 
         <div class="result-actions">
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn-action btn-find-maps" id="btn-find-maps">
+          <button type="button" class="btn-action btn-find-maps" id="btn-find-maps">
             <span class="icon" aria-hidden="true">📍</span> Tìm quán gần tôi trên Google Maps
-          </a>
+          </button>
+          <span class="location-disclaimer">Vị trí chỉ dùng để mở Google Maps, MealMate không lưu lại.</span>
+
+          <!-- Hộp dự phòng nhập khu vực thủ công khi từ chối quyền hoặc lỗi GPS -->
+          <div id="manual-location-box" class="manual-location-box" style="display: none;">
+            <p id="manual-location-msg" class="manual-location-msg"></p>
+            <div id="manual-location-guide" class="manual-location-guide" style="display: none;">
+              💡 <strong>Cách bật lại:</strong> Bấm biểu tượng 🔒 cạnh thanh địa chỉ &gt; chọn <strong>Vị trí</strong> &gt; chọn <strong>Cho phép</strong>.
+            </div>
+            <form id="manual-location-form" class="manual-location-form">
+              <input type="text" id="manual-location-input" class="manual-location-input" 
+                     placeholder="Bạn đang ở khu vực nào? (vd: Thái Nguyên)" 
+                     aria-label="Nhập tên khu vực của bạn">
+              <button type="submit" class="btn-manual-submit">Tìm ngay 🚀</button>
+            </form>
+          </div>
+
           <button type="button" class="btn-action btn-regrap" id="btn-regrap">
             <span class="icon" aria-hidden="true">🔄</span> Gắp lại phát nữa!
           </button>

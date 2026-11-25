@@ -11,11 +11,14 @@ import { initFridge } from './fridge.js';
 // ============================================================================
 // 1. TRẠNG THÁI ỨNG DỤNG (APP STATE)
 // ============================================================================
+const USER_AREA_STORAGE_KEY = 'mealmate_user_area';
+
 const state = {
   selectedCategory: 'all',     // 'all' | 'breakfast' | 'lunch' | 'dinner' | 'drink' | 'snack' | 'party'
   maxBudget: 999999,          // Ngân sách tối đa (VND)
   onlyVegetarian: false,      // Chỉ món chay
   isClawing: false,           // Đang trong tiến trình gắp (khóa nút)
+  isLocating: false,          // Đang trong tiến trình định vị GPS
   activeTab: 'machine',       // 'machine' | 'catalog'
   currentPrize: null          // Món vừa gắp trúng
 };
@@ -78,6 +81,11 @@ const dom = {
   modalDishVeg: document.getElementById('modal-dish-veg'),
   modalDishComment: document.getElementById('modal-dish-comment'),
   btnFindMaps: document.getElementById('btn-find-maps'),
+  manualLocationBox: document.getElementById('manual-location-box'),
+  manualLocationMsg: document.getElementById('manual-location-msg'),
+  manualLocationGuide: document.getElementById('manual-location-guide'),
+  manualLocationForm: document.getElementById('manual-location-form'),
+  manualLocationInput: document.getElementById('manual-location-input'),
   btnRegrap: document.getElementById('btn-regrap')
 };
 
@@ -119,6 +127,52 @@ function prefersReducedMotion() {
  */
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Lấy tiền tố tìm kiếm ("quán", "nhà hàng"...) phù hợp theo nhóm món
+ */
+function getSearchPrefix(dish) {
+  if (!dish) return 'quán ';
+  if (dish.category === 'drink') return 'quán ';
+  if (dish.category === 'snack') return 'quán ';
+  if (dish.category === 'party') return dish.price >= 150000 ? 'quán nhậu ' : 'quán ';
+  if (dish.category === 'dinner' && dish.price >= 150000) return 'nhà hàng ';
+  return 'quán ';
+}
+
+/**
+ * Xây dựng chuỗi từ khóa tìm kiếm món ăn trên Google Maps
+ */
+function buildDishSearchQuery(dish, area = '') {
+  if (!dish) return '';
+  const prefix = getSearchPrefix(dish);
+  if (area && area.trim()) {
+    return `${prefix}${dish.name} ${area.trim()}`;
+  }
+  return `${prefix}${dish.name}`;
+}
+
+/**
+ * Mở Google Maps theo tọa độ GPS chính xác hoặc theo khu vực thủ công
+ */
+function openGoogleMaps(dish, coords = null, area = null) {
+  if (!dish) return;
+  const query = buildDishSearchQuery(dish, area);
+  let mapsUrl = '';
+
+  if (coords && coords.latitude && coords.longitude) {
+    // Tìm tại đúng tọa độ GPS của người dùng với zoom 16z
+    mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}/@${coords.latitude},${coords.longitude},16z`;
+  } else if (area && area.trim()) {
+    // Tìm theo khu vực người dùng nhập tay (ví dụ: Thái Nguyên)
+    mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  } else {
+    // Dự phòng tìm gần tôi
+    mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query + ' gần tôi')}`;
+  }
+
+  window.open(mapsUrl, '_blank', 'noopener,noreferrer');
 }
 
 // ============================================================================
